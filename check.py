@@ -10,14 +10,15 @@ def check_root():
     print(Fore.YELLOW + "\n--------------------------------------------------")
     print(Fore.GREEN + "[INFO] " + Fore.BLUE + "CHECKING ROOT STATUS\n")
     devl = 26
+    #get connected device status
     device = subprocess.check_output('adb devices', shell=True)
     paths = ["/system/sd/xbin/su","/system/bin/failsafe/su","/system/app/Superuser.apk",
           "/data/local/xbin/su","/data/local/bin/su","/system/priv-app/Superuser.apk",
          "/system/priv-app/superuser.apk","/system/app/superuser.apk","/sbin/su","/system/bin/su",
          "/system/xbin/su","/data/local/su","/su/bin/su"]
-
-
+    #check if device is connected
     if len(device) is not devl:
+        #iterate over path and check if path exists on device
         for path in paths:
             cmd = "adb shell 'if [ -f " + path + " ];then echo 1; else echo 0; fi'"
             check = subprocess.check_output(cmd, shell=True)
